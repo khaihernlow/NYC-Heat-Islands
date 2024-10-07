@@ -99,6 +99,10 @@ aside::-webkit-scrollbar-thumb:hover {
     height: 100%;
 }
 
+#sidebar {
+    padding-bottom: 20vh;
+}
+
 /************ SLIDER ****************/
 .img-comp-container {
     position: relative;
