@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Inter', 'sans-serif';
+}
+
+h1 {
+    font-family: 'DM Serif Diaplay', 'serif';
+    font-weight: 400;
+    font-size: 36px;
+}
+
+h3 {
+    margin: 25px 0 3px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+p {
+    font-size: 15px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+u {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+a {
+    color: #3483eb;
+}
+
+section {
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 50px;
+}
+
+object {
+    width: 100%;
+    height: 100vh;
+    display: block;
+}
+
+.math_text {
+    font-size: 13px;
+}
+
+.sources_text {
+    font-family: 'serif';
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+aside {
+    width: 450px; 
+    padding: 30px;
+    background-color: #ffffff;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+/* Style the scrollbar */
+aside::-webkit-scrollbar {
+    width: 8px;
+}
+
+aside::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+aside::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 2px solid #f1f1f1;
+}
+
+aside::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#imageContent {
+    display: none;
+}
+
+.centerContainer {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/************ SLIDER ****************/
+.img-comp-container {
+    position: relative;
+    width: 800px;
+    height: 600px; /*should be the same height as the images*/
+  }
+  
+  .img-comp-img {
+    position: absolute;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+  }
+  
+  .img-comp-img img {
+    display: block;
+    /* border-radius: 30px; */
+  }
+  
+  .img-comp-slider {
+    position: absolute;
+    z-index: 9;
+    cursor: ew-resize;
+    /*set the appearance of the slider:*/
+    width: 40px;
+    height: 40px;
+    background-color: #2e2e2e;
+    opacity: 0.7;
+    border-radius: 50%;
+  }
+
+
+  #imageContainer {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#magnifyContainer {
+    display: none;
+    position: relative;
+    width: 800px;
+    height: 600px;
+    margin: 0 auto;
+}
+
+#magnifier {
+    position: absolute;
+    border: 3px solid #000;
+    border-radius: 50%;
+    cursor: none;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    display: none;
+}
+
+#magnifiedTemperature {
+    position: absolute;
+    width: 800px;
+    height: 600px;
+}

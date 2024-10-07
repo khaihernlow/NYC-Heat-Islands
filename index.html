@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Heat Island QGIS</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <body>
+    <div style="display: flex;">
+        <aside id="sidebar">
+            <h1 style="margin-bottom: 10px;">Urban Heat Islands: The Case of NYC</h1>
+            <p style="margin-bottom: 20px"><a style="text-decoration: none;" href="https://github.com/khaihernlow" target="_blank">@Khai Hern Low</a> and <a style="text-decoration: none;" href="https://github.com/vnt1c">@Ryan Hung</a></p>
+            <img style="width: 100%; border-radius: 10px; margin-bottom: 20px;" src="/images/newyork_landscape.jpg" alt="New York Landscape" />
+            <section id="section1">
+                <h2>Introduction</h2>
+                <h3>What is a heat island?</h3>
+                <p>A heat island is an urban area that tends to be hotter than the surrounding region. This occurs due to tightly-packed infrastructure such as roads and buildings that absorb and re-emit sunlight, thereby resulting in hotter surface temperatures.</p>
+
+                <h3>Why This Matters: Heat's Impact on New York City</h3>
+                <ul>
+                    <li>Approximately <u>350 New Yorkers</u> die from heat-related causes each year.</li>
+                    <li>Heat disproportionately affects vulnerable populations.</li>
+                    <li>The New York City Panel on Climate Change predicts an 8.8°F (4.9°C) increase in temperatures and an average of <u>six annual heat waves</u> by 2080.</li>
+                    <li>The black population is <u>two times</u> more susceptible to heat-related deaths.</li>
+                </ul> 
+
+                <h3>The Natural Solution: How Vegetation Helps</h3>
+                <p>Vegetation serves as a natural cooler and lowers the surrounding surface temperature. By providing shade and facilitating evapotranspiration, plants can reduce summer temperatures by 2-9°F (1-4°C) and surfaces by 20-45°F (11-25°C) according to the EPA.</p>
+
+            </section>
+            <section id="section2">
+                <h2>Environment Analysis</h2>
+                <h3>Methodology</h3>
+                <p>
+                    To analyze the relationship between vegetation and heat distribution in NYC, we incorporated Land Surface Temperature (LST) layer and the Normalized Difference Vegetation Index (NDVI) to model how vegetation influences temperature variations.
+                </p>
+                <h3>Data Layers</h3>
+                <p style="margin-bottom: 5px;">LST:  a measure of the temperature of the land surface in a certain region.</p>
+                <p style="margin-bottom: 5px;">NDVI: a measure of the health and amount of vegetation in a certain region.</p>
+                <p>Both of these indices rely on NASA Landsat 8 satellite imagery which is converted to numerical values using the  mathematical formulas below:</p>
+                
+                \[
+                NDVI = \frac{(NIR - R)}{(NIR + R)}
+                \]
+
+                <p class="math_text">NIR: Near-infrared reflectance (light reflected in the near-infrared region)</p>
+                <p class="math_text">R: Red reflectance (light reflected in the red region of the visible spectrum)</p>
+
+                \[
+                LST = \frac{BT}{1 + \left( \frac{\lambda \cdot BT}{\rho} \right) \ln \varepsilon}
+                \]
+
+                <p class="math_text">BT: Top of atmosphere brightness temperature (ºC)</p>
+                <p class="math_text">\( \lambda \): Wavelength of emitted radiance</p>
+                <p class="math_text">\( \epsilon \): Land surface emissivity</p>
+                <p class="math_text">\( \rho \): Constant (Plank's constant x (Velocity of light / Boltzmann constant))</p>
+            </section>
+            <section id="section3">
+                <h2>Effects of Vegetation on Heat</h2>
+                <h3>Spatial Analysis</h3>
+                <p>After putting the NDVI and LST data layers onto the map, an inverse relationship can be observed. The dark green regions show areas with higher vegetation density while light green represents areas of lower vegetation density. Using the same logic, dark red represents hotter areas while light blue represents colder areas.</p>
+                <p style="margin: 10px 0">As can be seen on the map, areas of high vegetation tend to have lower surface temperatures as well. The opposite is also true. This pattern is evident on many areas of the map. Of course, there are some outliers, but for the majority of the map, this trend can be observed. This trend supports the hypothesis that vegetation serves as a cooling mechanism, mitigating the urban heat island effect.</p>
+                <p>(Use the slider tool on the map to compare LST and NDVI)</p>
+            </section>
+            <section id="section4">
+                <h3>Numerical Analysis</h3>
+                <p style="margin-bottom: 10px;">
+                    Let's look at this relationship numerically. A uniform grid of 197 points, each one kilometer apart, was clipped to the map. Raster data from the NDVI and LST layers were bilinearly interpolated onto the points in order to better model their continuous behavior. We then plotted these points onto a scatter plot. A linear regression line was employed to model this relationship.
+                </p>
+                <p>From the regression model, it can be seen that there is an inverse relationship between the NDVI and LST indices. Additionally, the model has a moderate correlation coefficient of \(-0.37\) with an extremely significant p-value of \( 1.96 \times 10^{-28} \) (approximately zero). Interestingly, there seems to be a fanning in effect in the scatterplot, suggesting higher accuracy for higher land surface temperatures.
+                </p>
+            </section>
+            <section id="section5">
+                <h2>Socio-Economic Factors in Heat Distribution</h2>
+                <h3>Spatial</h3>
+                <p>
+                    Socio-economic variables also come into play when discussing the relationship found above. Specifically, the following conclusions can be drawn when adding additional data on income and race on the map:
+                </p>
+                <ul>
+                    <li><p>Areas of low income tend to experience higher LST indices and lower NDVI indices.</p></li>
+                    <li><p>Areas with dominant black populations on average experience higher LST levels and lower NDVI levels while their White and Asian counterparts experience the opposite, and are typically surrounded by more vegetation.</p></li>
+                    <li><p>Low income and minority populations tend to overlap in the map of NYC.</p></li>
+                </ul>
+                <h3>Race Map Legend</h3>
+                <p>Purple: Greater than 40% Asian Population</p>
+                <p>Red: Greater than 40% Black Population</p>
+                <p>Blue: Greater than 40% White Population</p>
+            </section>
+            <section id="section6">
+                <h2>Conclusion</h2>
+                <h3>Are they all related?</h3>
+                <p>
+                    Overall, we found that vegetation cools urban areas by lowering surface temperatures, but its distribution is uneven. Wealthier, predominantly white neighborhoods have more greenery, leading to cooler temperatures, while low-income, minority neighborhoods often lack trees and suffer from higher heat. Consequently, race and income might determine access to cooler, greener environments, leaving marginalized communities more vulnerable to heat.
+                </p>
+                <h3>Creating more Green Spaces</h3>
+                <p>The most effective solution is to add more greenery and vegetation to NYC. This includes public parks, walkable streets with trees and plants, and gardens. Green roofs are also a more environmentally friendly alternative to traditional roofs.</p>
+                <h3>Support Green Policies</h3>
+                <p>Implementing environmental justice policies that prioritize vulnerable communities by ensuring equal access to green spaces, tree planting, and cooling infrastructure. Supporting initiatives like <u><a href="https://www.nyc.gov/site/finance/property/landlords-green-roof.page" target="_blank">NYC's Green Roof Tax Abatement</a></u>, which incentivizes green roof installations in underserved areas, can help mitigate urban heat.</p>
+                <h3>Awareness Campaigns</h3>
+                <p>The campaigns on the benefits of urban greenery and the dangers of extreme heat can inspire community action and political change. By highlighting the health and economic impacts of heat islands, people are more likely to push for policy changes at all levels.</p>
+                <h3>Limitations</h3>
+                <p>While our research has important implications, we must acknowledge its limitations. Correlation does not imply causation, and our findings cannot be attributed to causation. The correlations were first-order, without accounting for confounding variables. Additionally, the datasets spanned different time intervals, though all were recent (within the last two years).</p>
+            </section>
+            <section id="section7">
+                <h2>References</h2>
+                <h3>Works Cited</h3>
+                <p class="sources_text">EPA Staff. “Learn About Heat Islands | US EPA.” Environmental Protection Agency (EPA), 20 August 2024, https://www.epa.gov/heatislands/learn-about-heat-islands#heat-islands. Accessed 5 October 2024.</p>
+                <p class="sources_text">EPA Staff. “Using Trees and Vegetation to Reduce Heat Islands | Heat Island Effect.” US EPA, 12 August 2016, https://19january2017snapshot.epa.gov/heat-islands/using-trees-and-vegetation-reduce-heat-islands_.html. Accessed 5 October 2024.</p>
+                <p class="sources_text">“Governor Hochul Signs Legislation to Study Extreme Heat Conditions in Disadvantaged Communities.” Governor Kathy Hochul, 23 September 2022, https://www.governor.ny.gov/news/governor-hochul-signs-legislation-study-extreme-heat-conditions-disadvantaged-communities. Accessed 6 October 2024.</p>
+                <p class="sources_text">Horton, Radley, et al. “New York City Panel on Climate Change 2015 Report Chapter 1: Climate Observations and Projections.” Building the Knowledge Base for Climate Resiliency: New York City Panel on Climate Change 2015 Report, vol. 1336, no. 1, 2015, pp. 18-35, doi:10.1111/nyas.12586.</p>
+                <p class="sources_text">Hsu, Angel, et al. “Disproportionate exposure to urban heat island intensity across major US cities.” Nature Communications, vol. 14, no. 10, 2019, doi:10.1038/s41467-021-22799-5.</p>
+                <p class="sources_text">Landsat Missions | U.S. Geological Survey.” USGS.gov, https://www.usgs.gov/landsat-missions. Accessed 6 October 2024.</p>
+                <p class="sources_text">New York City Department of Health, Environment & Health Data Portal. Economic conditions data. Neighborhood poverty. Accessed at https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/economic-conditions/?id=103 on 10/06/2024.</p>
+                <p class="sources_text">NYC Mayor's Office of Climate and Environmental Justice Staff. “Extreme Heat.” NYC Mayor's Office of Climate and Environmental Justice, https://climate.cityofnewyork.us/challenges/extreme-heat/.</p>
+                <p class="sources_text">U.S. Census Bureau, U.S. Department of Commerce. "Race." American Community Survey, ACS 1-Year Estimates Detailed Tables, Table B02001, 2023, https://data.census.gov/table/ACSDT1Y2023.B02001?q=B02001. Accessed on October 6, 2024.</p>
+            </section>
+        </aside>
+        <main style="flex-grow: 1;">
+            <object id="mainContent" type="text/html" data="qgis2web_lst\index.html"></object>
+            <div class="centerContainer">
+                <div class="img-comp-container">
+                    <div class="img-comp-img">
+                        <img src="images/lst.png" width="800" height="600">
+                    </div>
+                    <div class="img-comp-img img-comp-overlay">
+                        <img src="images/ndvi.png" width="800" height="600">
+                    </div>
+                </div>
+                <img id="imageContent" style="border: 1px solid; width: 800px; padding: 20px;" alt="Dynamic Section Image">
+                <div id="magnifyContainer" style="display: none; position: relative; width: 800px; height: 600px; margin: 0 auto;">
+                    <img id="temperatureMap" src="images/lst_race.png" style="width: 100%; height: auto;">
+                    <img id="raceMap" src="images/race.png" style="width: 100%; height: auto; position: absolute; top: 0; left: 0;">
+                    <div id="magnifier" style="position: absolute; border: 3px solid #000; border-radius: 50%; cursor: none; width: 100px; height: 100px; overflow: hidden; display: none;">
+                        <img id="magnifiedTemperature" src="images/lst_race.png" style="position: absolute; width: 800px; height: 600px;">
+                    </div>
+                </div>
+            </div>
+            <img id="legendImage" src="" style="display: none; position: absolute; top: 10px; right: 10px; width: 200px; height: auto;">
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
